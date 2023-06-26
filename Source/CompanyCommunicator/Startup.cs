@@ -133,6 +133,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator
                     options.UserAppExternalId =
                         configuration.GetValue<string>("UserAppExternalId", "148a66bb-e83d-425a-927d-09f4299a9274");
 
+                    options.AppBaseUri =
+                        configuration.GetValue<string>("AzureAd:ApplicationIdURI");
+
                     options.ImageUploadBlobStorage =
                         configuration.GetValue<bool>("ImageUploadBlobStorage", false);
 

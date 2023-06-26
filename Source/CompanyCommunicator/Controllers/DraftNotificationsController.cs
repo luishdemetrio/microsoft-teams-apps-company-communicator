@@ -116,7 +116,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
 
             if (!this.userAppOptions.DisableReadTracking)
             {
-                notification.TrackingUrl = this.HttpContext.Request.Scheme + "://" + this.HttpContext.Request.Host + "/api/sentNotifications/tracking";
+                // get the FD url to create the tracking URL over the FD 
+                string url = this.userAppOptions.AppBaseUri.Split("://")[1];
+                notification.TrackingUrl = this.HttpContext.Request.Scheme + "://" + url + "/api/sentNotifications/tracking";
             }
 
             var notificationId = await this.notificationDataRepository.CreateDraftNotificationAsync(
