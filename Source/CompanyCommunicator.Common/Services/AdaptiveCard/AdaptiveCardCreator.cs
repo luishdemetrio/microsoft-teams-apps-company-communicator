@@ -168,17 +168,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
                     Size = AdaptiveImageSize.Small,
                     IsVisible = true,
                     AltText = string.Empty,
-
                 });
-
-                //card.Body.Add(new AdaptiveTextBlock()
-                //{
-                //    Text = new Uri(trul, UriKind.RelativeOrAbsolute).ToString(),
-                //    Size = AdaptiveTextSize.ExtraLarge,
-                //    Weight = AdaptiveTextWeight.Bolder,
-                //    Wrap = true,
-                //    Separator = true,
-                //});
             }
 
             return card;
