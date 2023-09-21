@@ -417,31 +417,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 this.logger.LogError(exception, $"Failed to track the reading of the message. Error message: {exception.Message}.");
             }
 
-            // Create a fake image with a white background
-            using var bitmap = new Bitmap(1, 1);
-
-            using var graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(Color.White);
-
-            // Convert the image to a MemoryStream
-            using var stream = new MemoryStream();
-
-            bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png); // You can choose the image format
-
-            // Convert the MemoryStream to a byte array
-            byte[] imageBytes = stream.ToArray();
-
-            // Convert the byte array to a base64-encoded string
-            string base64String = Convert.ToBase64String(imageBytes);
-
-            // Create an object to hold the image data
-            var imageResponse = new
-            {
-                ImageData = base64String
-            };
-
-            // Return the fake image data as JSON
-            return Ok(imageResponse);
+            return this.Ok();
 
 
         }
