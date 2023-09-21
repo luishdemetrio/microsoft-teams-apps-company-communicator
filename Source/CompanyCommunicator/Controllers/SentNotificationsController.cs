@@ -33,6 +33,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
     using Microsoft.Teams.Apps.CompanyCommunicator.Controllers.Options;
     using Microsoft.Teams.Apps.CompanyCommunicator.Models;
     using Newtonsoft.Json;
+    using System.Drawing;
+    using System.IO;
 
     /// <summary>
     /// Controller for the sent notification data.
@@ -429,10 +431,19 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
             // Convert the MemoryStream to a byte array
             byte[] imageBytes = stream.ToArray();
 
-            // Return the fake image as a response
-            return File(imageBytes, "image/png"); // You can set the appropriate content type based on the image format
+            // Convert the byte array to a base64-encoded string
+            string base64String = Convert.ToBase64String(imageBytes);
 
-            
+            // Create an object to hold the image data
+            var imageResponse = new
+            {
+                ImageData = base64String
+            };
+
+            // Return the fake image data as JSON
+            return Ok(imageResponse);
+
+
         }
 
         /// <summary>
