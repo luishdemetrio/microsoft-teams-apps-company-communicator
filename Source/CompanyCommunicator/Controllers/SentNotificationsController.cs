@@ -427,7 +427,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
 
             graphics.Clear(Color.White);
 
-
             // Convert the image to a MemoryStream
             using var stream = new MemoryStream();
 
@@ -435,7 +434,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
 
             // Convert the MemoryStream to a byte array
             byte[] imageBytes = stream.ToArray();
-
 
             // Return the fake image data as JSON
             return File(imageBytes, "image/png");
