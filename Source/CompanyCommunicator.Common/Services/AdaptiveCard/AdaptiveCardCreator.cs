@@ -171,14 +171,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 
                 });
 
-                card.Body.Add(new AdaptiveTextBlock()
-                {
-                    Text = new Uri(trul, UriKind.RelativeOrAbsolute).ToString(),
-                    Size = AdaptiveTextSize.ExtraLarge,
-                    Weight = AdaptiveTextWeight.Bolder,
-                    Wrap = true,
-                    Separator = true,
-                });
+                //card.Body.Add(new AdaptiveTextBlock()
+                //{
+                //    Text = new Uri(trul, UriKind.RelativeOrAbsolute).ToString(),
+                //    Size = AdaptiveTextSize.ExtraLarge,
+                //    Weight = AdaptiveTextWeight.Bolder,
+                //    Wrap = true,
+                //    Separator = true,
+                //});
             }
 
             return card;
