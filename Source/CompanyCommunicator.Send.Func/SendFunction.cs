@@ -52,6 +52,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
         private readonly IStringLocalizer<Strings> localizer;
         private readonly IMemoryCache memoryCache;
 
+        private string messagetitle;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SendFunction"/> class.
         /// </summary>
@@ -113,6 +115,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
 
             var messageContent = JsonConvert.DeserializeObject<SendQueueMessageContent>(myQueueItem);
+
+            this.messagetitle = this.localizer.GetString("SentMessage");
 
             try
             {
@@ -179,7 +183,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                     messageActivity.Importance = ActivityImportance.High; // flags the importance flag for the message
                 }
 
-                messageActivity.Summary = this.localizer.GetString("SentMessage");
+                //messageActivity.Summary = this.localizer.GetString("SentMessage");
+                messageActivity.Summary = this.messagetitle;
 
                 var response = await this.messageService.SendMessageAsync(
                     message: messageActivity,
@@ -292,7 +297,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             jsonAC = jsonAC.Replace("[ID]", message.NotificationId);
             jsonAC = jsonAC.Replace("[KEY]", message.RecipientData.RecipientId);
             jsonAC = this.GetButtonTrackingUrl(jsonAC, message.NotificationId, message.RecipientData.RecipientId);
-
+            this.messagetitle = this.GetMessageTitle(jsonAC);
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,
@@ -300,6 +305,22 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             };
 
             return MessageFactory.Attachment(adaptiveCardAttachment);
+        }
+
+        private string GetMessageTitle(string notification)
+        {
+
+            var result = JsonConvert.DeserializeObject<RootSendingAdaptiveCard>(notification);
+
+            foreach (var item in result.body)
+            {
+                if (item.text != null)
+                {
+                    return item.text;
+                }
+            }
+
+            return string.Empty;
         }
 
         private string GetButtonTrackingUrl(string notification, string notificationId, string key)

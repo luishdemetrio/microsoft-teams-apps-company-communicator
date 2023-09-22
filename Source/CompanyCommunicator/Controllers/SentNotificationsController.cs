@@ -7,6 +7,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -364,6 +367,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> TrackRead(string id, string key)
         {
+
             // id cannot be null
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -415,7 +419,22 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 this.logger.LogError(exception, $"Failed to track the reading of the message. Error message: {exception.Message}.");
             }
 
-            return this.Ok();
+            // Create a fake image with a white background 1x1 px to allows us to track the readings
+            using var bitmap = new Bitmap(1, 1);
+            using var graphics = Graphics.FromImage(bitmap);
+
+            graphics.Clear(Color.White);
+
+            // Convert the image to a MemoryStream
+            using var stream = new MemoryStream();
+
+            bitmap.Save(stream, ImageFormat.Png);
+
+            // Convert the MemoryStream to a byte array
+            byte[] imageBytes = stream.ToArray();
+
+            // Return the fake image data as JSON
+            return File(imageBytes, "image/png");
         }
 
         /// <summary>
