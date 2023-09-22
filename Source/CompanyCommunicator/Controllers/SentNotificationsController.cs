@@ -36,6 +36,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
     using Microsoft.Teams.Apps.CompanyCommunicator.Controllers.Options;
     using Microsoft.Teams.Apps.CompanyCommunicator.Models;
     using Newtonsoft.Json;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+
 
     /// <summary>
     /// Controller for the sent notification data.
