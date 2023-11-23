@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\apis\axiosJWTDecorator.ts" />
     <None Remove="ClientApp\src\components\ManageGroups\ManageGroups.tsx" />
   </ItemGroup>
 
@@ -51,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\apis\axiosJWTDecorator.ts" />
     <TypeScriptCompile Include="ClientApp\src\components\ManageGroups\ManageGroups.tsx" />
   </ItemGroup>
 

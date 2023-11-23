@@ -20,7 +20,10 @@ import { TFunction } from "i18next";
 import { OpenUrlAction } from 'adaptivecards';
 import { Icon, TooltipHost } from 'office-ui-fabric-react';
 import axios from '../../apis/axiosJWTDecorator';
-let baseAxiosUrl = getBaseUrl() + '/api';
+//let baseAxiosUrl = getBaseUrl() + '/api';
+//gambiarra to bypass Front Door due to the recent changes in the authentication flow that removed
+//authentication headers from all calls to the APIs
+let baseAxiosUrl = getBaseUrl().replace("azurefd", "azurewebsites") + '/api';
 
 //image types valid for the upload
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
