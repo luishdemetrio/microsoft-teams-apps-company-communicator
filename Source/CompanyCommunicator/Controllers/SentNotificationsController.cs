@@ -428,7 +428,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
             using var bitmap = new Bitmap(1, 1);
             using var graphics = Graphics.FromImage(bitmap);
 
-            graphics.Clear(Color.White);
+            graphics.Clear(Color.Transparent);
 
             // Convert the image to a MemoryStream
             using var stream = new MemoryStream();
