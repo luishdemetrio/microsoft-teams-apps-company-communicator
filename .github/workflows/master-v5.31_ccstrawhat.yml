@@ -11,6 +11,7 @@ on:
 env:
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   NODE_VERSION: '16.13.0' 
+  PROJECT: 'Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj'
   
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: subdir/package-lock.json
+          cache-dependency-path: Source\CompanyCommunicator\ClientApp\package-lock.json
       - run: npm ci
       - run: npm test
 
@@ -40,9 +41,9 @@ jobs:
        # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-          dotnet restore "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj"
-          dotnet build --configuration Release "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj"
-          dotnet publish -c Release "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj" -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
+          dotnet restore ${{ env.PROJECT }}
+          dotnet build --configuration Release ${{ env.PROJECT }}
+          dotnet publish -c Release ${{ env.PROJECT }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
 
       - name: Login to Azure
         uses: azure/login@v1
