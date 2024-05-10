@@ -25,9 +25,9 @@ jobs:
              # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-          dotnet restore "MyKudos.Kudos.Api\MyKudos.Kudos.Api.csproj"
-          dotnet build --configuration Release "MyKudos.Kudos.Api\MyKudos.Kudos.Api.csproj"
-          dotnet publish -c Release "MyKudos.Kudos.Api\MyKudos.Kudos.Api.csproj" -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
+          dotnet restore "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj"
+          dotnet build --configuration Release "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj"
+          dotnet publish -c Release "Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj" -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
