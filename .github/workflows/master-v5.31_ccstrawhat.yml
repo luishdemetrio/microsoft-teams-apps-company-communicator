@@ -15,17 +15,30 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.13.0'
+       
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '3.1'
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Install NPM dependencies
+        run: npm install --no-audit
+        working-directory: 'Source\CompanyCommunicator\ClientApp' 
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Build and Publish
+        env:
+          CI: false
+        run: |
+          dotnet restore 'Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj'
+          dotnet build --configuration Release 'Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj' 
+          dotnet publish -c Release 'Source\CompanyCommunicator\Microsoft.Teams.Apps.CompanyCommunicator.csproj' -o '${{env.DOTNET_ROOT}}/myapp'
+     
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
