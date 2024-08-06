@@ -28,10 +28,15 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: 'Clear NuGet Cache'
+        run: |
+          dotnet nuget locals all --clear
+
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          dotnet outdated -u
           dotnet restore 'Source\CompanyCommunicator.Data.Func\Microsoft.Teams.Apps.CompanyCommunicator.Data.Func.csproj' 
           dotnet build --configuration Release 'Source\CompanyCommunicator.Data.Func\Microsoft.Teams.Apps.CompanyCommunicator.Data.Func.csproj' --output ./output
           popd
