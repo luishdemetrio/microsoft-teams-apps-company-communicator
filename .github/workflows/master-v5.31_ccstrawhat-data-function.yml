@@ -32,7 +32,8 @@ jobs:
         shell: pwsh
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --output ./output
+          dotnet restore 'Source\CompanyCommunicator.Data.Func\Microsoft.Teams.Apps.CompanyCommunicator.Data.Func.csproj' 
+          dotnet build --configuration Release 'Source\CompanyCommunicator.Data.Func\Microsoft.Teams.Apps.CompanyCommunicator.Data.Func.csproj' --output ./output
           popd
       
       - name: Login to Azure
